@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppRestaurant.ViewModels"
+             x:Class="AppRestaurant.Views.MenuPage"
+             Title="Romanian Gourmee">
+
+    <ContentPage.BindingContext>
+        <vm:MenuViewModel />
+    </ContentPage.BindingContext>
+
+   
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15" BackgroundColor="#FAF3E0">
+           
+            <Label Text="Romanian Gourmee"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   TextColor="#8B0000"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Bun venit! Savurați preparatele tradiționale cu un twist modern."
+                   FontSize="18"
+                   FontAttributes="Italic"
+                   TextColor="#5A3E36"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20"/>
+
+           
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <Button Text="Vezi Cosul" 
+                        BackgroundColor="#8B0000" 
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        Padding="10,5"
+                        WidthRequest="130"
+                        Clicked="OnCartButtonClicked" />
+
+                <Button Text="Notificari" 
+                        BackgroundColor="#FF8C00" 
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        Padding="10,5"
+                        WidthRequest="130"
+                        Clicked="OnNotificationsClicked"/>
+                <Button Text="Gestionare Produse"
+                        BackgroundColor="#006400"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        Padding="10,5"
+                        WidthRequest="160"
+                        Clicked="OnProductManagementClicked"/>
+            </StackLayout>
+
+           
+            <Label Text="Meniul Nostru"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#8B0000"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,10"/>
+
+            <CollectionView x:Name="ProductsList" ItemsSource="{Binding Products}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#D3B8AE" CornerRadius="15" Padding="15" Margin="5" BackgroundColor="White" HasShadow="True">
+                            <StackLayout Orientation="Vertical" Spacing="8">
+                                <Label Text="{Binding Name}" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold"
+                                       TextColor="#8B0000"/>
+
+                                <Label Text="{Binding Description}" 
+                                       FontSize="14" 
+                                       TextColor="#5A3E36"
+                                       LineBreakMode="WordWrap"/>
+
+                                <Label Text="{Binding Price, StringFormat='Preț: {0:C}'}" 
+                                       FontSize="16" 
+                                       TextColor="#000000"/>
+
+                                <Button Text="Adauga in cos"
+                                BackgroundColor="#8B0000"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="10"
+                                Padding="10,5"
+                                Command="{Binding BindingContext.AddToCartCommand, Source={x:Reference ProductsList}}"
+                                CommandParameter="{Binding .}" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

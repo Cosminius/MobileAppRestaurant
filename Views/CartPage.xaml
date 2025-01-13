@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppRestaurant.ViewModels"
+             x:Class="AppRestaurant.Views.CartPage"
+             Title="Cosul Meu">
+
+    <ContentPage.BindingContext>
+        <vm:CartViewModel  />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15" BackgroundColor="#FAF3E0">
+            <Label Text="Cosul Meu"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   TextColor="#8B0000"
+                   HorizontalOptions="Center"/>
+
+            <CollectionView x:Name="ProductsList" ItemsSource="{Binding CartItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#D3B8AE"
+                               CornerRadius="15"
+                               Padding="15"
+                               Margin="5"
+                               BackgroundColor="White"
+                               HasShadow="True">
+                            <StackLayout Orientation="Vertical" Spacing="8">
+                                
+                                <Label Text="{Binding Product.Name}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#8B0000"/>
+
+                                <Label Text="{Binding Quantity, StringFormat='Cantitate: {0}'}"
+                                       FontSize="16"
+                                       TextColor="#000000"/>
+
+                                <Label Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}"
+                                       FontSize="16"
+                                       TextColor="#000000"/>
+
+                                
+                                <Button Text="Elimina"
+                                        BackgroundColor="#FF8C00"
+                                        TextColor="White"
+                                        CornerRadius="10"
+                                        Command="{Binding BindingContext.RemoveFromCartCommand, Source={x:Reference ProductsList}}"
+                                        CommandParameter="{Binding .}"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            
+            <Button Text="Plaseaza Comanda"
+                    BackgroundColor="#8B0000"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    Padding="10,5"
+                    Clicked="OnPlaceOrderClicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
